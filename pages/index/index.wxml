@@ -29,7 +29,7 @@
       <view class="storyBox">
         <story wx:if="{{info.length>0 && reqL}}" wx:for="{{info}}" wx:key="index" data-no="{{index}}"
         data-id="{{item.id}}" data-title="{{item.title}}" data-src="{{item.src}}" data-contentype="{{item.contentType}}" bindtap="linkAbumInfo"
-        datasource="{{item}}" countpic="{{countPic}}" className="{{screen}}"></story>
+        datasource="{{item}}" countpic="{{countPic}}" className="{{screen}}" shape="{{shape}}"></story>
       </view>
       
     </view>
@@ -42,6 +42,8 @@
     </view>
   </scroll-view>
 
-  <bgConfirm id="bgConfirm" msg="{{confirm}}" confirm="确定" cancel=""></bgConfirm>
   <mini-player id="miniPlayer" songInfo="{{songInfo}}"></mini-player>
 </view>
+
+<!-- 空态组件 -->
+<no-data reactCode="{{reactCode}}"></no-data>

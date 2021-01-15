@@ -41,5 +41,8 @@
   <mini-player wx:if="{{showMInibar}}" id="miniPlayer" songInfo="{{songInfo}}"></mini-player>
 </view>
 
+<!-- 空态组件 -->
+<no-data reactCode="{{reactCode}}"></no-data>
+
 
 

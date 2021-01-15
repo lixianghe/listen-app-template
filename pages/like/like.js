@@ -1,4 +1,4 @@
-import { albumFavoriteCancel,albumFavoriteAdd,mediaFavoriteCancel,mediaFavoriteAdd } from '../../utils/httpOpt/api'
+import tool from '../../utils/util'
 const app = getApp()
 Page({
   mixins: [require('../../developerHandle/like')],
@@ -10,12 +10,14 @@ Page({
     info: '',
     currentTap: 0,
     scrollLeft: 0,
-    mainColor: app.globalData.mainColor
+    mainColor: app.globalData.mainColor,
+    reactCode: 0
   },
   screen: app.globalData.screen,
  
   onLoad(options) {
-    
+    // 检测网络问题
+    tool.getNetWork(this)
   },
   onShow() {
     this.selectComponent('#miniPlayer').setOnShow()

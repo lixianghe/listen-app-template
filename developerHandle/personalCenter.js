@@ -33,10 +33,6 @@ module.exports = {
     },
     // 开发者注入模板其他入口
     data: [{
-      method: 'order',
-      icon: '/images/my_buy.png',
-      title: '开通/续费会员'
-    }, {
       method: 'like',
       icon: '/images/mine_like.png',
       title: '我喜欢的' 
@@ -44,10 +40,6 @@ module.exports = {
       method: 'latelyListen',
       icon: '/images/latelyListen.png',
       title: '最近收听' 
-    }, {
-      method: 'myBuy',
-      icon: '/images/vip.png',
-      title: '我购买的'
     }]
   },
   onShow() {

@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "开通/续费会员",
-  "enablePullDownRefresh": true,
-  "component": true,
-  "disableScroll": true,
-  "usingComponents": {
-
-  }
-}

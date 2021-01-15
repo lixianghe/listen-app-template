@@ -46,6 +46,8 @@ module.exports = {
         value: 'media'
       }],
     },
+    // 封面图片形状 rect矩形,rectBig大矩形，square，正方形
+    shape: 'square',
   },
   onShow() {
 

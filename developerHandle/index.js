@@ -75,6 +75,8 @@ module.exports = {
     // 频道列表，内容列表数据标志变量
     reqS: true,
     reqL: false,
+    // 封面图片形状 rect矩形,rectBig大矩形，square，正方形
+    shape: 'square',
   },
   // 页面后台数据(不参与渲染)
   pageData: {

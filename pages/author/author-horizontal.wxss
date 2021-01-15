@@ -67,6 +67,10 @@
 .label-view .active-tap {
   color: #000;
 }
+.storyBox {
+  margin-top: 1vh;
+}
+
 /* 弹框 */
 .model {
   position: fixed;

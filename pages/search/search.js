@@ -18,8 +18,11 @@ Page({
     colorStyle: app.sysInfo.colorStyle,
     backgroundColor: app.sysInfo.backgroundColor,
     screen: app.globalData.screen,
+    reactCode: 0
   },
   onLoad() {
+    // 检测网络问题
+    tool.getNetWork(this)
     this.setData({
       times: ((wx.getSystemInfoSync().screenHeight)/ 100)
     })

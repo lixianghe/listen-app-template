@@ -45,7 +45,9 @@ module.exports = {
       }]
     },
     // 开发者注入模板页面数据
-    info: []
+    info: [],
+    // 封面图片形状 rect矩形,rectBig大矩形，square，正方形
+    shape: 'square'
   },
   onShow() {
 

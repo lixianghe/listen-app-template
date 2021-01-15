@@ -7,10 +7,7 @@
     "pages/abumInfo/abumInfo",
     "pages/playInfo/playInfo",
     "pages/latelyListen/latelyListen",
-    "pages/search/search",
-    "pages/member/pay",
-    "pages/member/member",
-    "pages/myBuy/myBuy"
+    "pages/search/search"
     
   ],
   "window": {
@@ -55,8 +52,8 @@
   },
   "usingComponents": {
     "mini-player": "/components/miniPlayer/index",
-    "selectWorks": "/components/selectWorks/index",
-    "bgConfirm": "/components/bgConfirm/index"
+    "select-works": "/components/selectWorks/index",
+    "no-data": "/components/noData/index"
   },
   "requiredBackgroundModes": ["audio"],
   "sitemapLocation": "sitemap.json"

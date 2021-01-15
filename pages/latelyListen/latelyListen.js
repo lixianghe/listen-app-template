@@ -1,3 +1,4 @@
+import tool from '../../utils/util'
 const app = getApp()
 Page({
   mixins: [require('../../developerHandle/latelyListen')],
@@ -9,12 +10,14 @@ Page({
     currentTap: 0,
     scrollLeft: 0,
     
-    mainColor: app.globalData.mainColor
+    mainColor: app.globalData.mainColor,
+    reactCode: 0
   },
   screen: app.globalData.screen,
  
   onLoad(options) {
-    
+    // 检测网络问题
+    tool.getNetWork(this)
   },
   onShow() {
     this.selectComponent('#miniPlayer').setOnShow()

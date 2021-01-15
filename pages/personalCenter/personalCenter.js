@@ -1,5 +1,4 @@
-// import {getData} from '../../utils/httpOpt/http'
-// const { getData } = require('../../utils/https')
+const tool = require('../../utils/util')
 
 const app = getApp()
 import btnConfig from '../../utils/pageOtpions/pageOtpions'
@@ -15,7 +14,8 @@ Page({
     // userInfo: null,
     debugLog: '',
     songInfo: {},
-    mainColor: btnConfig.colorOptions.mainColor
+    mainColor: btnConfig.colorOptions.mainColor,
+    reactCode: 0
   },
 
   // 测试用清除最近收听数据
@@ -23,6 +23,8 @@ Page({
     wx.setStorageSync('indexData', null)
   },
   onLoad(options) {
+    // 检测网络问题
+    tool.getNetWork(this)
   },
   onShow() {
     this.selectComponent('#miniPlayer').setOnShow()

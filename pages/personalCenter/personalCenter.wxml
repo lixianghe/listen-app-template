@@ -29,3 +29,6 @@
   </view>
   <mini-player songInfo="{{songInfo}}" id="miniPlayer"></mini-player>
 </view>
+
+<!-- 空态组件 -->
+<no-data reactCode="{{reactCode}}"></no-data>

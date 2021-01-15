@@ -1,4 +1,4 @@
-// import { getData } from '../../utils/httpOpt/httpOpt'
+import tool from '../../utils/util'
 const app = getApp()
 
 Page({
@@ -12,6 +12,7 @@ Page({
     currentTap: 0,
     scrollLeft: 0,
     isFixed: false,
+    reactCode: 0
   },
   scrollhandle(e) {
     if (e.detail.scrollLeft > 230) {
@@ -26,6 +27,8 @@ Page({
     
   },
   onLoad(options) {
+    // 检测网络问题
+    tool.getNetWork(this)
     setTimeout(() => {
       wx.checkSession({
         success:(res)=> {
