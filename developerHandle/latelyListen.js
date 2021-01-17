@@ -30,7 +30,7 @@ const app = getApp()
 module.exports = {
   data: {
     showModal: false,
-    req: false,
+    reqL: false,
     countPic: '/images/media_num.png',
     // 开发者注入模板标签数据
     labels: {
@@ -64,14 +64,7 @@ module.exports = {
     const src = e.currentTarget.dataset.src
     const title = e.currentTarget.dataset.title
     wx.setStorageSync('img', src)
-    const routeType = e.currentTarget.dataset.contentype
-    let url
-    if (routeType === 'album') {
-      url = `../abumInfo/abumInfo?id=${id}&title=${title}`
-    } else if (routeType === 'media') {
-      url = `../playInfo/playInfo?id=${id}`
-    }
-
+    let url = `../abumInfo/abumInfo?id=${id}&title=${title}`
     wx.navigateTo({
       url: url
     })
@@ -122,7 +115,7 @@ module.exports = {
         return item
       })
       this.setData({
-        req: true,
+        reqL: true,
         info: info
       })
       if (info.length === 0) {

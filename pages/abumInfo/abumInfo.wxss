@@ -82,6 +82,7 @@
   /* margin-left: -5vh; */
   vertical-align: middle;
   transform: translateX(2vh);
+  float: left;
 }
 .page .left .songList view:nth-child(1) {
   margin-top: 5vh;
@@ -94,12 +95,18 @@
 }
 .page .left .songList view text:nth-child(1) {
   width: 7.6vh;
-  display: inline-block;
+  /* display: inline-block; */
   text-align: right;
+  float: left;
   /* margin-left: -5vh; */
 }
 .page .left .songList view text:nth-child(2) {
   margin-left: 7.35vh;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  width: 75%;
 }
 .page .left .songList view text:last-child {
   float: right;

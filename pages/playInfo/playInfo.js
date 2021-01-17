@@ -2,9 +2,6 @@
 const app = getApp()
 import tool from '../../utils/util'
 import btnConfig from '../../utils/pageOtpions/pageOtpions'
-// const { getData } = require('../../utils/https')
-
-var timer = null
 
 Page({
   mixins: [require('../../developerHandle/playInfo')],
@@ -29,13 +26,6 @@ Page({
     ],
     btnCurrent: null,
     noTransform: '',
-    typelist: ['listLoop', 'singleLoop', 'shufflePlayback'],
-    typeName: {
-      "listLoop": '循环播放',
-      "singleLoop": '单曲循环',
-      "shufflePlayback": '随机播放',
-    },
-    loopType: 'listLoop',   // 默认列表循环
     likeType: 'noLike',
     total: 0,
     scrolltop: 0,
@@ -73,10 +63,11 @@ Page({
       canplay: canplay,
       noPlay: options.noPlay || null,
       abumInfoName: options.abumInfoName || null,
-      loopType: wx.getStorageSync('loopType') || 'listLoop'
+      abumInfoId: options.abumInfoId || null
     })
-    // 把abumInfoName存在缓存中，切歌的时候如果不是专辑就播放同一首
+    // 把abumInfoName存在缓存中
     wx.setStorageSync('abumInfoName', options.abumInfoName)
+    wx.setStorageSync('abumInfoId', options.abumInfoId)
     if (options.noPlay !== 'true' || abumInfoName !== options.abumInfoName) wx.setStorageSync('nativeList', canplay)
     if (options.noPlay !== 'true') wx.showLoading({ title: '加载中...', mask: true })
   },
@@ -84,27 +75,24 @@ Page({
     const that = this;
     // 监听歌曲播放状态，比如进度，时间
     tool.playAlrc(that, app);
-    timer = setInterval(function () {
-      tool.playAlrc(that, app);
-    }, 1000);
     that.queryProcessBarWidth()
   },
   onUnload: function () {
-    clearInterval(timer);
+
   },
   onHide: function () {
-    clearInterval(timer)
+
   },
   imgOnLoad() {
     this.setData({ showImg: true })
   },
   play() {
-    // 初始化audioManager
     let that = this
-    tool.initAudioManager(that, this.data.canplay)
-    // 从统一播放界面切回来，根据playing判断播放状态options.noPlay为true代表从minibar过来的
-    const playing = wx.getStorageSync('playing')
-    if (playing || this.data.noPlay !== 'true') app.playing()
+    that.setData({
+      playtime: app.globalData.playtime || '00:00',
+      percent: app.globalData.percent || 0
+    })
+    app.playing(null, that)
   },
   btnsPlay(e) {
     const type = e.currentTarget.dataset.name
@@ -112,85 +100,18 @@ Page({
   },
   // 上一首
   pre() {
-    let loopType = wx.getStorageSync('loopType')
-    if (loopType !== 'singleLoop') this.setData({ showImg: false })
     const that = this
     app.cutplay(that, -1)
   },
   // 下一首
   next() {
-    let loopType = wx.getStorageSync('loopType')
-    if (loopType !== 'singleLoop') this.setData({ showImg: false })
     const that = this
     app.cutplay(that, 1)
-  },
-  // 切换播放模式
-  loopType() {
-    const canplay = wx.getStorageSync('allList')
-    let nwIndex = this.data.typelist.findIndex(n => n === this.data.loopType)
-    let index = nwIndex < 2 ? nwIndex + 1 : 0
-    app.globalData.loopType = this.data.typelist[index]
-    // 根据播放模式切换currentList
-    const list = this.checkLoop(this.data.typelist[index], canplay)
-    wx.setStorageSync('allList', canplay)
-    this.setData({
-      loopType: this.data.typelist[index],
-      canplay: list
-    })
-  },
-  // 判断循环模式
-  checkLoop(type, list) {
-    wx.setStorageSync('loopType', type)
-    wx.showToast({ title: this.data.typeName[type], icon: 'none' })
-    let loopList;
-    // 列表循环
-    if (type === 'listLoop') {
-      let nativeList = wx.getStorageSync('nativeList') || []
-      loopList = nativeList        
-    } else if (type === 'singleLoop') {
-      // 单曲循环
-      loopList = [list[app.globalData.songInfo.episode]]
-    } else {
-      // 随机播放
-      loopList = this.randomList(list)
-    }
-    return loopList
-  },
-  // 打乱数组
-  randomList(arr) {
-    let len = arr.length;
-    while (len) {
-        let i = Math.floor(Math.random() * len--);
-        [arr[i], arr[len]] = [arr[len], arr[i]];
-    }
-    return arr;
   },
   // 暂停/播放
   toggle() {
     const that = this
     tool.toggleplay(that, app)
-  },
-  // 播放列表
-  more() {
-    setTimeout(()=> {
-      this.setScrollTop()
-    }, 100)
-    let allPlay = wx.getStorageSync('allList')
-    this.setData({
-      showList: true,
-      currentId: this.data.currentId || Number(this.data.songInfo.id),
-      canplay: allPlay
-    })
-    // 显示的过度动画
-    this.animation.translate(0, 0).step()
-    this.setData({
-      animation: this.animation.export()
-    })
-    setTimeout(() => {
-      this.setData({
-        noTransform: 'noTransform'
-      })
-    }, 300)
   },
   closeList() {
     this.setData({
@@ -216,11 +137,7 @@ Page({
       playing: true
       // noTransform: ''
     })
-    app.playing()
-    wx.setStorage({
-      key: "songInfo",
-      data: app.globalData.songInfo
-    })
+    app.playing(null, this)
   },
   // 开始拖拽
   dragStartHandle(event) {
@@ -312,16 +229,5 @@ Page({
         imageWidth: '49vh'
       })
     }
-  },
-  // 处理scrollTop的高度
-  setScrollTop() {
-    let index = this.data.canplay.findIndex(n => Number(n.id) === Number(this.data.songInfo.id))
-    let query = wx.createSelectorQuery();
-    query.select('.songList').boundingClientRect(rect=>{
-      let listHeight = rect.height;
-      this.setData({
-        scrolltop: index > 2 ? listHeight / this.data.canplay.length * (index - 2) : 0
-      })
-    }).exec();
   }
 })

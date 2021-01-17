@@ -35,12 +35,9 @@
   margin-top: 6vh;
 }
 
-/* 不是全屏 */
+/* 不是全屏，和父盒子一样大 */
 .noFull {
+  /* width: 150vh;
+  height: 60vh!important; */
   background: transparent!important;
-  width: 100vh!important;
-  height: 65vh!important;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 }

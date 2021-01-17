@@ -7,7 +7,7 @@
     <image class="countpic" src="{{countpic}}" ></image>
     <text class="countxt">{{datasourceCount}}</text>
   </view>
-  <image class="playPic" src="{{playpic}}" wx:if="{{showPlay}}" style="top: {{shape === 'rectBig' ? '44vh': '36vh'}}"></image>
+  <image class="playPic" src="{{playpic}}" wx:if="{{showPlay}}" style="top: {{shape === 'rectBig' ? '44vh': '31vh'}}"></image>
   <view wx:if="{{src.length > 0}}"
       class="like"
       style="background-image:url({{src}})"
@@ -19,4 +19,5 @@
     <text class="vip" wx:if="{{datasource.isVip}}" style="background-color:{{mainColor}}">VIP</text>
     <text>{{ datasource.title }}</text>
   </view>
+
 </view>

@@ -122,6 +122,6 @@
   transform: translateX(-50%);
 }
 .storyBox {
-  margin-top: 5.89vh;
+  margin-top: 4.8vh;
   margin-left: 0.12vh;
 }

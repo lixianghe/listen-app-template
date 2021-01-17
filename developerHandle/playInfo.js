@@ -18,8 +18,6 @@ const { showData } = require('../utils/httpOpt/localData')
 
 module.exports = {
   data: {
-    showModal: false,               // 控制弹框
-    content: '该内容为会员付费内容，您需要先成为会员后再购买此内容就可以收听精品内容啦',
     // 播放详情页面按钮配置
     playInfoBtns: [
       {
@@ -36,21 +34,6 @@ module.exports = {
       {
         name: 'next',                                            
         img: '/images/next2.png'                                 
-      },
-      // {
-      //   name: 'like',                                             
-      //   img: {
-      //     noLike: '/images/info_like_no.png' ,                    
-      //     liked: '/images/info_like.png'                          
-      //   }
-      // },
-      {
-        name: 'loopType',                                         
-        img: {
-          listLoop: '/images/listLoop.png' ,                      
-          singleLoop: '/images/singleLoop.png',                   
-          shufflePlayback: '/images/shufflePlayback.png'          
-        }
       },
       {
         name: 'more',                                             
@@ -74,5 +57,24 @@ module.exports = {
     app.globalData.songInfo = Object.assign({}, data)
     that.setData({ songInfo: data })
     wx.setStorageSync('songInfo', data)
-  }
+  },
+  // 播放列表弹框，一般需要提供通过当前歌曲id查出此歌曲的分页列表，下面是写死数据，实际情况根据接口来
+   more() {
+    let allPlay = wx.getStorageSync('allList')
+    this.setData({
+      showList: true,    // true，弹框出现                                                 
+      currentId: this.data.currentId || Number(this.data.songInfo.id),  // 当前歌曲id
+      canplay: allPlay    // 弹出列表                                          
+    })
+    // 显示的过度动画
+    this.animation.translate(0, 0).step()
+    this.setData({
+      animation: this.animation.export()
+    })
+    setTimeout(() => {
+      this.setData({
+        noTransform: 'noTransform'
+      })
+    }, 300)
+  },
 }

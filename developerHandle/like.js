@@ -33,7 +33,7 @@ module.exports = {
   data: {
     info: [],
     showModal: false,
-    req: false,
+    reqL: false,
     likePic: ['/images/info_like.png', '/images/info_like_no.png'],
     labels: {
       show: true,
@@ -64,15 +64,7 @@ module.exports = {
     const src = e.currentTarget.dataset.src
     const title = e.currentTarget.dataset.title
     wx.setStorageSync('img', src)
-    const routeType = e.currentTarget.dataset.contentype
-
-    let url
-    if (routeType === 'album') {
-      url = `../abumInfo/abumInfo?id=${id}&title=${title}`
-    } else if (routeType === 'media') {
-      url = `../playInfo/playInfo?id=${id}`
-    }
-    
+    let url = `../abumInfo/abumInfo?id=${id}&title=${title}`
     wx.navigateTo({
       url: url
     })
@@ -123,7 +115,7 @@ module.exports = {
         return item
       })
       this.setData({
-        req: true,
+        reqL: true,
         info: info
       })
       if (info.length === 0) {

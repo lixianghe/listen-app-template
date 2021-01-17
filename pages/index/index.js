@@ -12,7 +12,8 @@ Page({
     currentTap: 0,
     scrollLeft: 0,
     isFixed: false,
-    reactCode: 0
+    reactCode: 0,
+    abumInfoId: null
   },
   scrollhandle(e) {
     if (e.detail.scrollLeft > 230) {
@@ -52,7 +53,7 @@ Page({
   },
   onShow() {
     this.selectComponent('#miniPlayer').setOnShow()
-    this.selectComponent('#miniPlayer').watchPlay()
+    tool.showPlayStatus(this)
   },
   onHide() {
     this.selectComponent('#miniPlayer').setOnHide()

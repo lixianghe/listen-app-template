@@ -53,7 +53,8 @@
   "usingComponents": {
     "mini-player": "/components/miniPlayer/index",
     "select-works": "/components/selectWorks/index",
-    "no-data": "/components/noData/index"
+    "no-data": "/components/noData/index",
+    "no-network": "/components/noNetwork/index"
   },
   "requiredBackgroundModes": ["audio"],
   "sitemapLocation": "sitemap.json"

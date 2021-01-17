@@ -1,0 +1,8 @@
+<!-- 网络异常时 -->
+<view class="noData {{screen}} {{colorStyle}}" style="background-color: {{backgroundColor}}; height: 100%;" wx:if="{{reactCode == 1}}">
+  <image class="img" src="{{noNetImg}}"></image>
+  <view class="text-view" bindtap="refresh">
+    <text >网络异常，请检查网络设置</text>
+    <button class="link">重新加载</button>
+  </view>
+</view>

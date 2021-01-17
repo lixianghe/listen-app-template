@@ -30,5 +30,5 @@
   <mini-player songInfo="{{songInfo}}" id="miniPlayer"></mini-player>
 </view>
 
-<!-- 空态组件 -->
-<no-data reactCode="{{reactCode}}"></no-data>
+<!-- 无网络组件 -->
+<no-network reactCode="{{reactCode}}"></no-network>

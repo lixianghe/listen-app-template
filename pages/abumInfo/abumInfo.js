@@ -49,7 +49,6 @@ Page({
     likeIcon1: '../../images/like.png',
     likeIcon2: '../../images/like_none.png',
     abumInfoName: '',
-    routeType: null,                     // 专辑类型：电台、专辑
     reactCode: 0
   },
   audioManager: null,
@@ -62,8 +61,7 @@ Page({
     this.setData({
       src: wx.getStorageSync('img'),
       optionId: options.id,
-      abumInfoName: options.title,
-      routeType: options.routeType
+      abumInfoName: options.title
     })
     wx.setNavigationBarTitle({
       title: options.title,
@@ -77,9 +75,11 @@ Page({
     scrollTopNo = 0
   },
   onShow() {
-    const currentId = wx.getStorageSync('songInfo').id
+    let currentId = wx.getStorageSync('songInfo').id
+    let playing = wx.getStorageSync('playing')
     this.setData({
       currentId: Number(currentId),
+      playing
     })
     this.selectComponent('#miniPlayer').setOnShow()
   },
@@ -126,12 +126,7 @@ Page({
     this.toInfo()
   },
   toInfo() {
-    app.globalData.abumInfoId = this.data.optionId
-    wx.navigateTo({ url: `../playInfo/playInfo?id=${app.globalData.songInfo.id}&abumInfoName=${this.data.abumInfoName}` })
-  },
-  // 改变current
-  changeCurrent(currentId) {
-    this.setData({ currentId: currentId.detail })
+    wx.navigateTo({ url: `../playInfo/playInfo?id=${app.globalData.songInfo.id}&abumInfoName=${this.data.abumInfoName}&abumInfoId=${this.data.optionId}` })
   },
   setCanplay(canplay) {
     this.setData({
@@ -147,11 +142,7 @@ Page({
   async playAll() {
     let allList = wx.getStorageSync('allList') || []
     wx.setStorageSync('nativeList', allList)
-    const msg = '网络异常，无法播放！'
-    app.globalData.canplay = JSON.parse(JSON.stringify(this.data.canplay))
-    app.globalData.songInfo = app.globalData.canplay[0]
-    app.globalData.abumInfoId = this.data.optionId
-    this.initAudioManager(this.data.canplay)
+    app.globalData.songInfo = allList[0]
     let params = {
       mediaId: app.globalData.songInfo.id,
       contentType: 'story'
@@ -160,19 +151,17 @@ Page({
       currentId: app.globalData.songInfo.id,
       songInfo: app.globalData.songInfo,
     })
+    // 把abumInfoName存在缓存中
+    wx.setStorageSync('abumInfoName', this.data.abumInfoName)
+    wx.setStorageSync('abumInfoId', this.data.optionId)
     let that = this
     if (getMedia) await getMedia(params, that)
-    app.playing()
+    app.playing(null, that)
   },
   setPlaying(e) {
     this.setData({
       playing: e.detail,
     })
-  },
-  // 初始化 BackgroundAudioManager
-  initAudioManager(list) {
-    this.audioManager = wx.getBackgroundAudioManager()
-    this.audioManager.playInfo = { playList: list }
   },
   // 列表滚动事件
   listScroll: tool.debounce(async function (res) {

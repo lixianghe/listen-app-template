@@ -1,5 +1,6 @@
 
 import tool from '../../utils/util'
+import { mediaUrlList } from '../../utils/httpOpt/api'
 const app = getApp()
 let searchMixin = require('../../developerHandle/search')
 Page({
@@ -18,11 +19,8 @@ Page({
     colorStyle: app.sysInfo.colorStyle,
     backgroundColor: app.sysInfo.backgroundColor,
     screen: app.globalData.screen,
-    reactCode: 0
   },
   onLoad() {
-    // 检测网络问题
-    tool.getNetWork(this)
     this.setData({
       times: ((wx.getSystemInfoSync().screenHeight)/ 100)
     })
@@ -36,9 +34,7 @@ Page({
   // 函数节流防止请求过多
   search: tool.throttle(function (e) {
     this.setData({keyWord: e[0].detail.value})
-    setTimeout(() => {
-      this.getData(this.data.currentTap)
-    })
+    this.getData(this.data.currentTap)
   }, 200),
   cancel() {
     this.setData({
@@ -60,15 +56,38 @@ Page({
     const title = e.currentTarget.dataset.title
     wx.setStorageSync('img', src)
     const routeType = e.currentTarget.dataset.contentype
+
     let url
     if (routeType === 'album') {
-      url = `../abumInfo/abumInfo?id=${id}&title=${title}`
+      url = `../abumInfo/abumInfo?id=${id}&title=${title}&routeType=${routeType}`
+      wx.navigateTo({
+        url: url
+      })
     } else if (routeType === 'media') {
-      url = `../playInfo/playInfo?id=${id}`
+
+      let opt = {
+        mediaId: id,
+        contentType: 'story'
+      }
+      mediaUrlList(opt).then(res2 => {
+        let canplay = res2.mediaPlayVoList
+        canplay.map((item, index) => {
+          item.title = item.mediaName
+          item.id = item.mediaId
+          item.dt = item.timeText
+          item.coverImgUrl = item.coverUrl
+          item.src = item.mediaUrl
+        })
+        
+        wx.setStorageSync('canplay',canplay)
+        url = `../playInfo/playInfo?id=${id}`
+        wx.navigateTo({
+          url: url
+        })
+      })
+
     } 
-    wx.navigateTo({
-      url: url
-    })
+    
   },
   getData(index) {
     this.getSearch(this.data.labels[index].value)

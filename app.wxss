@@ -31,3 +31,17 @@ html{
   height: 5vh;
   margin-top: 3vh;
 }
+view[focus-select=true]{
+  box-shadow: inset 0px 0px 0px 4px#00b26a;
+}
+
+image[focus-select=true]{
+  box-shadow: inset 4px 4px #00b26a, inset -4px -4px#00b26a;
+}
+
+button[focus-select=true]{
+  box-shadow: inset 4px 4px #00b26a, inset -4px -4px#00b26a;
+}
+text[focus-select=true]{
+  box-shadow: inset 0px 0px 0px 4px#00b26a;
+}

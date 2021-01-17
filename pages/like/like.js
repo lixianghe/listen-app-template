@@ -21,7 +21,7 @@ Page({
   },
   onShow() {
     this.selectComponent('#miniPlayer').setOnShow()
-    this.selectComponent('#miniPlayer').watchPlay()
+    tool.showPlayStatus(this)
   },
   onHide() {
     this.selectComponent('#miniPlayer').setOnHide()

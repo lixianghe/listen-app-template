@@ -38,7 +38,7 @@
   height: 11.03vh;
   border-radius: 50%;
   position: absolute;
-  left: 2.73vh;
+  right: 2.73vh;
   bottom: 28.72vh;
   background: rgba(0, 0, 0, 0.6) no-repeat center 0.3vh / 11vh 11vh
 }

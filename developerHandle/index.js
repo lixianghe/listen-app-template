@@ -76,7 +76,7 @@ module.exports = {
     reqS: true,
     reqL: false,
     // 封面图片形状 rect矩形,rectBig大矩形，square，正方形
-    shape: 'square',
+    shape: 'square'
   },
   // 页面后台数据(不参与渲染)
   pageData: {
@@ -144,16 +144,8 @@ module.exports = {
         count: 19,
         isVip: false
 
-      },
-    
-      {
-        id: 962,
-        title: "内容标题1",
-        src: "https://cdn.kaishuhezi.com/kstory/story/image/2af5072c-8f22-4b5d-acc2-011084c699f8_info_w=750_h=750_s=670433.jpg",
-        contentType: "media",
-        count: 0,
-        isVip: false
-      }]
+      }
+    ]
       let info = data.map(item => {
         item.title = `${name}-${item.title}`
         return item
@@ -177,18 +169,11 @@ module.exports = {
     const src = e.currentTarget.dataset.src
     const title = e.currentTarget.dataset.title
     wx.setStorageSync('img', src)
-    const routeType = e.currentTarget.dataset.contentype
 
     if (!app.globalData.latelyListenId.includes(id)) {
       app.globalData.latelyListenId.push(id)
     }
-    let url
-    if (routeType === 'album' || routeType === 'fm') {
-      url = `../abumInfo/abumInfo?id=${id}&title=${title}&routeType=${routeType}`
-    } else if (routeType === 'media') {
-      url = `../playInfo/playInfo?id=${id}`
-    }
-
+    let url = `../abumInfo/abumInfo?id=${id}&title=${title}`
     wx.navigateTo({
       url: url
     })

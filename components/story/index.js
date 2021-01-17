@@ -22,10 +22,6 @@ Component({
       type: Array,
       value: []
     },
-    playpic:{
-      type: String,
-      value: []
-    },
     countpic:{
       type: String,
       value: ''
@@ -33,6 +29,10 @@ Component({
     shape: {
       type: String,
       value: 'square'
+    },
+    showPlay: {
+      type: Boolean,
+      value: false
     }
   },
 
@@ -49,8 +49,9 @@ Component({
     flag: 0,
     width: '',
     height: '',
-    showPlay: false,
-    datasourceCount: ''
+    // showPlay: false,
+    datasourceCount: '',
+    playpic: '/images/playing.png'
   },
 
   /**
@@ -74,16 +75,21 @@ Component({
         'item.coverUrl': app.sysInfo.defaultImg
       })
     },
-    _onshow () {
+    showPlay () {
       this.setData({
         showPlay: true
       })
     },
     clearPlay () {
       console.log('falsefalsefalse')
-      this.setData({
-        showPlay: false
-      })
+      // 清空上一首播放态
+      let playingId = wx.getStorageSync('abumInfoId')
+      this.story = this.selectComponent(`#story${playingId}`)
+      if (this.story) {
+        this.setData({
+          showPlay: false
+        })
+      }
     },
     formW (num) {
       let b = num.toString().split('').reverse()
@@ -116,13 +122,13 @@ Component({
       case 'rect':
         this.setData({
           width: 36.77,
-          height: 48.55
+          height: 43.55
         })
         break;
       case 'rectBig':
         this.setData({
-          width: 43.2,
-          height: 56.46
+          width: 41.2,
+          height: 53.46
         })
         break;
       default:

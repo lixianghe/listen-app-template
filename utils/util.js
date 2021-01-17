@@ -56,10 +56,9 @@ function toggleplay(that, app) {
 
 
 // 初始化 BackgroundAudioManager
-function initAudioManager(app, that, songInfo) {
+function initAudioManager(that, songInfo) {
   let list = wx.getStorageSync('nativeList')
   that.audioManager = wx.getBackgroundAudioManager()
-  console.log('app.globalData.songInfo-----------------------------------' + JSON.stringify(app.globalData.songInfo))
   that.audioManager.playInfo = {
     playList: list,
     playState: {
@@ -71,6 +70,81 @@ function initAudioManager(app, that, songInfo) {
     context: songInfo
   };
   EventListener(that)
+}
+
+
+
+// 监听播放，上一首，下一首
+function EventListener(that){
+  //播放事件
+  that.audioManager.onPlay(() => {
+    console.log('--------------onPlay----------------')
+    wx.hideLoading()
+    that.setData({ playing: true });
+    wx.setStorageSync('playing', true)
+    // 控制专辑详情的播放gif
+    let pages = getCurrentPages()
+    let abum = pages.filter(n => n.route == 'pages/abumInfo/abumInfo')[0]
+    if (!abum) return
+    let minibar = abum.selectComponent('#miniPlayer')
+    abum.setData({ playing: true })
+    minibar.setData({ playing: true })
+  })
+  //暂停事件
+  that.audioManager.onPause(() => {
+    console.log('触发播放暂停事件');
+    that.setData({ playing: false });
+    wx.setStorageSync('playing', false)
+    // 控制专辑详情的播放gif
+    let pages = getCurrentPages()
+    let abum = pages.filter(n => n.route == 'pages/abumInfo/abumInfo')[0]
+    if (!abum) return
+    abum.setData({ playing: false })
+  })
+  //上一首事件
+  that.audioManager.onPrev(() => {
+    console.log('触发上一首事件');
+    that.pre()
+  })
+  //下一首事件
+  that.audioManager.onNext(() => {
+    console.log('触发onNext事件');
+    that.next();
+  })
+  //停止事件
+  that.audioManager.onStop(() => {
+    console.log('触发停止事件');
+    that.setData({ playing: false });
+    wx.setStorageSync('playing', false)
+    // 控制专辑详情的播放gif
+    let pages = getCurrentPages()
+    let abum = pages.filter(n => n.route == 'pages/abumInfo/abumInfo')[0]
+    if (!abum) return
+    abum.setData({ playing: false })
+  })
+  //播放错误事件
+  that.audioManager.onError(() => {
+    console.log('触发播放错误事件');
+    that.setData({ playing: false });
+    wx.setStorageSync('playing', false)
+    // 控制专辑详情的播放gif
+    let pages = getCurrentPages()
+    let abum = pages.filter(n => n.route == 'pages/abumInfo/abumInfo')[0]
+    if (!abum) return
+    abum.setData({ playing: false })
+  })
+  //播放完成事件
+  that.audioManager.onEnded(() => {
+    console.log('触发播放完成事件');
+  })
+}
+
+// 控制封面上播放状态的显示隐藏
+function showPlayStatus(that) {
+  let storyId = wx.getStorageSync('abumInfoId')
+  that.setData({
+    abumInfoId: storyId
+  })
 }
 
 // 从面板切到小程序的赋值
@@ -93,49 +167,6 @@ function panelSetInfo(app, that) {
     let playing = res.playState.status == 1 ? true : false
     wx.setStorageSync('playing', playing)
   }
-}
-
-// 监听播放，上一首，下一首
-function EventListener(that){
-  //播放事件
-  that.audioManager.onPlay(() => {
-    console.log('--------------onPlay----------------')
-    wx.hideLoading()
-    that.setData({ playing: true });
-    wx.setStorageSync('playing', true)
-  })
-  //暂停事件
-  that.audioManager.onPause(() => {
-    console.log('触发播放暂停事件');
-    that.setData({ playing: false });
-    wx.setStorageSync('playing', false)
-  })
-  //上一首事件
-  that.audioManager.onPrev(() => {
-    console.log('触发上一首事件');
-    that.pre()
-  })
-  //下一首事件
-  that.audioManager.onNext(() => {
-    console.log('触发onNext事件');
-    that.next();
-  })
-  //停止事件
-  that.audioManager.onStop(() => {
-    console.log('触发停止事件');
-    that.setData({ playing: false });
-    wx.setStorageSync('playing', false)
-  })
-  //播放错误事件
-  that.audioManager.onError(() => {
-    console.log('触发播放错误事件');
-    that.setData({ playing: false });
-    wx.setStorageSync('playing', false)
-  })
-  //播放完成事件
-  that.audioManager.onEnded(() => {
-    console.log('触发播放完成事件');
-  })
 }
 
 // 函数节流
@@ -182,6 +213,8 @@ function getNetWork(that) {
   })
 }
 
+
+
 module.exports = {
   formatToSend: formatToSend,
   formatduration: formatduration,
@@ -192,5 +225,6 @@ module.exports = {
   throttle: throttle,
   debounce: debounce,
   panelSetInfo: panelSetInfo,
-  getNetWork: getNetWork
+  getNetWork: getNetWork,
+  showPlayStatus: showPlayStatus
 }
