@@ -92,13 +92,6 @@ Component({
         data: result
       })
     },
-    changeOrder() { // 改变排序方式
-      let currentOrder = !this.data.order
-      this.setData({
-        order: currentOrder
-      })
-      this.loadWorks()
-    }
   },
   attached(options) {
     this.animation = wx.createAnimation({

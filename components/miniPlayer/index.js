@@ -148,14 +148,14 @@ Component({
     },
     // 因为1.9.2版本无法触发onshow和onHide所以事件由它父元素触发
     setOnShow() {
-      let that = this
+      // let that = this
       this.listenPlaey()
       const playing = wx.getStorageSync('playing')
       this.setData({
         playing: playing,
         percent: app.globalData.percent || 0
       })
-      if (playing) app.playing(null, that)
+      // if (playing) app.playing(null, that)
     },
     setOnHide() {
     }

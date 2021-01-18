@@ -129,7 +129,7 @@ Page({
     const songInfo = e.currentTarget.dataset.song
     app.globalData.songInfo = songInfo
     // 获取歌曲详情
-    let params = {mediaId: app.globalData.songInfo.id, contentType: 'story'}
+    let params = {mediaId: app.globalData.songInfo.id}
     await this.getMedia(params)
     this.setData({
       songInfo: songInfo,

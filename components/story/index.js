@@ -95,6 +95,9 @@ Component({
       let b = num.toString().split('').reverse()
       let res = b.slice(4, b.length).reverse().join('')+'万'
       return res
+    },
+    aa() {
+
     }
   },
   

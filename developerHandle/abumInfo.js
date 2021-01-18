@@ -6,8 +6,7 @@
  * pageNoName: 'pageNum'        // 分页数
  * pageSizeName: 'pageSize'     // 每页数目
  * idName: 'albumId'            // 这个页面请求的id
- * 2、播放列表：canplay(注：canplay需要存在Storage里面)
- * 3、当前专辑所有列表allList，只需存在Storage缓存里面，主要用于切歌使用
+ * 2、播放列表：canplay(注：canplay需要存在Storage里面)，把allList赋值为canplay并存在缓存中
  * 4、此专辑总曲目数：total
  * 5、由于模板内的字段名称可能和后台提供不一样，在获取list后重新给模板内的字段赋值：如下
  * list.map((item, index) => {
@@ -24,7 +23,7 @@ module.exports = {
   data: {
     pageNoName: 'pageNum',
     pageSizeName: 'pageSize',
-    pageSize: 10,
+    pageSize: 10,   // 分页数用于分页请求和选集
     idName: 'albumId',
     existed: false,                     // 是否被收藏
     playAllPic: '/images/playAll.png'
@@ -34,28 +33,30 @@ module.exports = {
   },
   async onLoad(options) {
     let id = options.id
-    this._getList()
-    this.getAllList()
+    let params = {id: id}
+    this.getData(params)
   },
   onReady() {
 
   },
-  // 获取分页歌曲列表，假数据
-  async _getList(params) {
-    let canplay = await this.getData()
-    this.setData({canplay})
-    wx.setStorageSync('canplay', canplay)
-  },
-  getData() {
-    let canplay = showData.abumInfo.data
+  // 获取分页歌曲列表，假数据，这里getData需要支持上拉和下拉的加载，up上拉加载，down下拉加载，pages文件夹下的abumInfo.js会调用这里的getData
+  getData(params) {
+    let _list = showData.abumInfo.data
     let total = showData.abumInfo.total
-    this.setData({total})
-    return canplay
-  },
-  // 获取所有的播放列表
-  async getAllList() {
-    // 假设allList是canplay，真实情况根据接口来
-    let allList = await this.getData()
-    wx.setStorageSync('allList', allList)
+    // 上拉和下拉的情况
+    if (params.lazy == 'up'){
+      _list = this.data.canplay.concat(_list)
+     } else if (params.lazy == 'down') {
+      _list = _list.concat(this.data.canplay)
+     }
+     // setTimeout模拟返回时间
+    setTimeout(() => {
+      this.setData({
+        canplay: _list,
+        total
+      })
+    }, 300)
+    wx.setStorageSync('canplay', _list)
+    wx.setStorageSync('allList', _list)
   }
 }

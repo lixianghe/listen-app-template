@@ -36,7 +36,6 @@ Page({
     scrollTop: 0,
     pageNo: 1,
     initPageNo: 1,
-    pageSize: 15,
     selected: 0,
     startY: 0,
     loadAnimate: null,
@@ -112,8 +111,7 @@ Page({
       initPageNo: e.detail.pageNum,
     })
     let idName = this.data.idName
-    const canplay = await this.getData({ ...e.detail, [idName]: this.data.optionId })
-    this.setCanplay(canplay)
+    this.getData({ ...e.detail, [idName]: this.data.optionId })
   },
 
   // 点击歌曲名称跳转到歌曲详情
@@ -128,15 +126,6 @@ Page({
   toInfo() {
     wx.navigateTo({ url: `../playInfo/playInfo?id=${app.globalData.songInfo.id}&abumInfoName=${this.data.abumInfoName}&abumInfoId=${this.data.optionId}` })
   },
-  setCanplay(canplay) {
-    this.setData({
-      canplay: canplay,
-    })
-    wx.setStorage({
-      key: 'canplay',
-      data: canplay,
-    })
-  },
   
   // 播放全部
   async playAll() {
@@ -144,8 +133,7 @@ Page({
     wx.setStorageSync('nativeList', allList)
     app.globalData.songInfo = allList[0]
     let params = {
-      mediaId: app.globalData.songInfo.id,
-      contentType: 'story'
+      mediaId: app.globalData.songInfo.id
     }
     this.setData({
       currentId: app.globalData.songInfo.id,
@@ -185,17 +173,11 @@ Page({
     scrollTopNo++
     let pageNoName = this.data.pageNoName
     let idName = this.data.idName
-    let params = { [pageNoName]: this.data.initPageNo + scrollTopNo, [idName]: this.data.optionId }
-    const data = await this.getData(params)
-    const list = this.data.canplay.concat(data)
+    let params = { [pageNoName]: this.data.initPageNo + scrollTopNo, [idName]: this.data.optionId, lazy: 'up' }
+    this.getData(params)
     setTimeout(() => {
       this.setData({
-        canplay: list,
         showLoadEnd: false,
-      })
-      wx.setStorage({
-        key: 'canplay',
-        data: list,
       })
     }, 800)
   }, 1000),
@@ -270,10 +252,8 @@ Page({
   async topHandle() {
     let pageNoName = this.data.pageNoName
     let idName = this.data.idName
-    const data = await this.getData({ [pageNoName]: this.data.pageNo - 1, [idName]: this.data.optionId })
-    const list = data.concat(this.data.canplay)
+    this.getData({ [pageNoName]: this.data.pageNo - 1, [idName]: this.data.optionId, lazy: 'down' })
     this.setData({
-      canplay: list,
       showLoadTop: false,
       scrollTop: 0,
       pageNo: this.data.pageNo - 1,

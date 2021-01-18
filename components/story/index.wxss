@@ -87,3 +87,12 @@
   border-radius: 5vh;
   padding: 2vh;
 }
+.image[focus-select=true]:before {
+  content:"";
+  position:absolute;
+  width: 41.81vh;
+  height: 41.81vh;
+  border-radius: 2vh;
+  vertical-align: bottom;
+  box-shadow: inset 4px 4px #00b26a, inset -4px -4px #00b26a;
+}

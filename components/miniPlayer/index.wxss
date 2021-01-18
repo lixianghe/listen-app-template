@@ -16,7 +16,9 @@
   background: -ms-linear-gradient(top, rgba(255,255,255, 0.07) 0%,rgba(255,255,255, 0) 100%) ;
   box-shadow: 0 3px 4px 0 rgba(0,0,0, 0.2);
 }
-
+.playing-status {
+  width: 100vw;
+}
 .playing-status .progress {
   display: flex;
   width: 100%;

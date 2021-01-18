@@ -66,8 +66,7 @@ Page({
     } else if (routeType === 'media') {
 
       let opt = {
-        mediaId: id,
-        contentType: 'story'
+        mediaId: id
       }
       mediaUrlList(opt).then(res2 => {
         let canplay = res2.mediaPlayVoList

@@ -85,10 +85,13 @@ App({
     that.setData({
       currentId: Number(song.id)
     })
+    // 控制专辑详情的播放gif
+    let pages = getCurrentPages()
+    let abum = pages.filter(n => n.route == 'pages/abumInfo/abumInfo')[0]
+    if (abum) abum.setData({ currentId: Number(song.id) }) 
     // 获取歌曲的url
     let params = {
-      mediaId: song.id,
-      contentType: 'story'
+      mediaId: song.id
     }
     await getMedia(params, that)
     this.playing(null, that)

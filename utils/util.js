@@ -58,14 +58,12 @@ function toggleplay(that, app) {
 // 初始化 BackgroundAudioManager
 function initAudioManager(that, songInfo) {
   let list = wx.getStorageSync('nativeList')
+  let index = list.findIndex(n => Number(n.id) === Number(songInfo.id))
   that.audioManager = wx.getBackgroundAudioManager()
   that.audioManager.playInfo = {
     playList: list,
     playState: {
-      // curIndex: app.globalData.songIndex,                                      //当前播放列表索引
-      // duration: app.globalData.songInfo.trial ? app.globalData.songInfo.trialDuration : app.globalData.songInfo.duration,                                  //总时长
-      // currentPosition: app.globalData.currentPosition,             //当前播放时间
-      // status: true,                                                   //当前播放状态 0暂停状态 1播放状态 2没有音乐播放
+      curIndex: index                             //当前播放列表索引
     },
     context: songInfo
   };
