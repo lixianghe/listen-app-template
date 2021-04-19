@@ -55,7 +55,7 @@ Page({
     // 根据分辨率设置样式
     this.setStyle()
     // 获取歌曲列表
-    const canplay = wx.getStorageSync('allList')
+    const canplay = wx.getStorageSync('canplay')
     let abumInfoName = wx.getStorageSync('abumInfoName')
     const songInfo = app.globalData.songInfo
     this.setData({

@@ -6,7 +6,7 @@
  * pageNoName: 'pageNum'        // 分页数
  * pageSizeName: 'pageSize'     // 每页数目
  * idName: 'albumId'            // 这个页面请求的id
- * 2、播放列表：canplay(注：canplay需要存在Storage里面)，把allList赋值为canplay并存在缓存中
+ * 2、播放列表：canplay(注：canplay需要存在Storage里面)
  * 4、此专辑总曲目数：total
  * 5、由于模板内的字段名称可能和后台提供不一样，在获取list后重新给模板内的字段赋值：如下
  * list.map((item, index) => {
@@ -55,8 +55,7 @@ module.exports = {
         canplay: _list,
         total
       })
-    }, 300)
+    }, 800)
     wx.setStorageSync('canplay', _list)
-    wx.setStorageSync('allList', _list)
   }
 }

@@ -12,6 +12,7 @@
       </view>
 
       <view class="adminCenter" wx:if="{{!isLogin}}">
+        <view style="color:#fff;font-size:7vh;margin: 3vh">{{recode}}</view>
         <view class="adminCenterZwdl">暂未登录</view>
         <view class="adminCenterDetail">请登录后查看详情</view>
         <view class="adminBtnOut" bindtap="loginIn" data-state="login" style="background-color: {{mainColor}}"

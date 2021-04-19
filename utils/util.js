@@ -61,11 +61,7 @@ function initAudioManager(that, songInfo) {
   let index = list.findIndex(n => Number(n.id) === Number(songInfo.id))
   that.audioManager = wx.getBackgroundAudioManager()
   that.audioManager.playInfo = {
-    playList: list,
-    playState: {
-      curIndex: index                             //当前播放列表索引
-    },
-    context: songInfo
+    playList: list
   };
   EventListener(that)
 }

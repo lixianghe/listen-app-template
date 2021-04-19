@@ -129,7 +129,7 @@ Page({
   
   // 播放全部
   async playAll() {
-    let allList = wx.getStorageSync('allList') || []
+    let allList = wx.getStorageSync('canplay') || []
     wx.setStorageSync('nativeList', allList)
     app.globalData.songInfo = allList[0]
     let params = {

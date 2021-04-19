@@ -58,8 +58,9 @@ module.exports = {
 
     wx.login({
       success: (loginRes) => {
+        console.log('rescode-----------------------------' + loginRes.code)
         this.setData({
-          showWxLogin: false
+          recode: loginRes.code
         })
       },
       fail: (err) => {

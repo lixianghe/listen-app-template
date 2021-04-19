@@ -60,7 +60,7 @@ module.exports = {
   },
   // 播放列表弹框，一般需要提供通过当前歌曲id查出此歌曲的分页列表，下面是写死数据，实际情况根据接口来
    more() {
-    let allPlay = wx.getStorageSync('allList')
+    let allPlay = wx.getStorageSync('canplay')
     this.setData({
       showList: true,    // true，弹框出现                                                 
       currentId: this.data.currentId || Number(this.data.songInfo.id),  // 当前歌曲id
