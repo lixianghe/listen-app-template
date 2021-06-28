@@ -14,12 +14,11 @@
  *   }, {
  *     method: 'like',
  *     icon: '/images/mine_like.png',
- *     title: '我喜欢的' 
+ *     title: '我喜欢的'
  *   }]
  *  其他入口，配置入口点击事件方法名，入口图标，入口名称；入口数量开发者根据项目需要配置
  */
-const app = getApp()
-
+const app = getApp();
 
 module.exports = {
   data: {
@@ -28,98 +27,84 @@ module.exports = {
     showWxLogin: true,
     // 开发者注入模板用户信息
     userInfo: {
-      avatar: '',
-      nickname: '用户',
+      avatar: "",
+      nickname: "用户",
     },
     // 开发者注入模板其他入口
-    data: [{
-      method: 'like',
-      icon: '/images/mine_like.png',
-      title: '我喜欢的' 
-    }, {
-      method: 'latelyListen',
-      icon: '/images/latelyListen.png',
-      title: '最近收听' 
-    }]
+    data: [
+      {
+        method: "like",
+        icon: "/images/mine_like.png",
+        title: "我喜欢的",
+      },
+      {
+        method: "latelyListen",
+        icon: "/images/latelyListen.png",
+        title: "最近收听",
+      },
+    ],
   },
-  onShow() {
-
-  },
-  onLoad(options) {
-  },
-  onReady() {
-
-  },
+  onShow() {},
+  onLoad(options) {},
+  onReady() {},
 
   /**
    * 登录
    */
   loginIn(event) {
-
     wx.login({
       success: (loginRes) => {
-        console.log('rescode-----------------------------' + loginRes.code)
         this.setData({
-          recode: loginRes.code
-        })
+          recode: loginRes.code,
+        });
       },
-      fail: (err) => {
-        console.log('扫码失败', JSON.stringify(err))
-      },
-      complete: (res) => {
-
-      }
-    })
+      fail: (err) => {},
+      complete: (res) => {},
+    });
   },
   getUserInfo() {
-    const that = this
+    const that = this;
     wx.getUserInfo({
-      success: res => {
+      success: (res) => {
         let obj = {
           nickname: res.userInfo.nickName,
-          avatar: res.userInfo.avatarUrl
-        }
-        console.log(res.userInfo)
-        console.log(obj)
+          avatar: res.userInfo.avatarUrl,
+        };
         that.setData({
           userInfo: obj,
-          isLogin: true
-        })
+          isLogin: true,
+        });
       },
-      fail: err => {
-        console.log('error !'+err)
-      },
-      complete: com => {
-        console.log('complete!'+com)
-      }
-    })
+      fail: (err) => {},
+      complete: (com) => {},
+    });
   },
 
-  logoutTap(){
+  logoutTap() {
     let obj = {
-      nickname: '',
-      avatar: ''
-    }
+      nickname: "",
+      avatar: "",
+    };
     this.setData({
       userInfo: obj,
-      isLogin: false
-    })
+      isLogin: false,
+    });
   },
 
   order() {
     if (!app.userInfo || !app.userInfo.token) {
-      wx.showToast({ icon: 'none', title: '请登录后进行操作' })
+      wx.showToast({ icon: "none", title: "请登录后进行操作" });
       return;
     }
-    wx.navigateTo({ url: '../member/member' })
+    wx.navigateTo({ url: "../member/member" });
   },
   like() {
-    wx.navigateTo({ url: '../like/like' })
+    wx.navigateTo({ url: "../like/like" });
   },
   latelyListen() {
-    wx.navigateTo({ url: '../latelyListen/latelyListen' })
+    wx.navigateTo({ url: "../latelyListen/latelyListen" });
   },
   myBuy() {
-    wx.navigateTo({ url: '../myBuy/myBuy' })
+    wx.navigateTo({ url: "../myBuy/myBuy" });
   },
-}
+};

@@ -22,9 +22,9 @@ module.exports = {
   data: {
     // 搜素页面分类的lables
     labels: [
-      {value: 'album', label: '专辑'},
-      {value: 'media', label: '故事'}
-    ]
+      { value: "album", label: "专辑" },
+      { value: "media", label: "故事" },
+    ],
   },
   onShow() {},
   async onLoad(options) {},
@@ -33,25 +33,25 @@ module.exports = {
     /**
      * 这里我们给开发者提供keywords和labels对应点击的的值，其余参数开发者自行添加
      */
-     let opt = {
+    let opt = {
       pageNum: 1,
       pageSize: 20,
       contentType: params.label,
-      keyWord: params.keyWord
-    }
+      keyWord: params.keyWord,
+    };
     // 模拟返回数据
-    let data = await this.searchData(opt)
-    data.map(item => {
-      item.id = item.id
-      item.title = item.title
-      item.coverImgUrl = item.coverImgUrl
-    })
+    let data = await this.searchData(opt);
+    data.map((item) => {
+      item.id = item.id;
+      item.title = item.title;
+      item.coverImgUrl = item.coverImgUrl;
+    });
     this.setData({
       info: data,
-    })
+    });
   },
-  searchData(opt){
-    let data = showData.abumInfo.data
-    return data
-  }
+  searchData(opt) {
+    let data = showData.abumInfo.data;
+    return data;
+  },
 };

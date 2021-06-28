@@ -1,39 +1,39 @@
 // components/story/story.js
-const app = getApp()
+const app = getApp();
 
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-    className: { 
+    className: {
       type: String,
-      value: false
+      value: false,
     },
     datasource: {
       type: Object,
       value: {
-        src: '',
-        title: '',
-        isVip: false
-      }
+        src: "",
+        title: "",
+        isVip: false,
+      },
     },
-    likePic:{
+    likePic: {
       type: Array,
-      value: []
+      value: [],
     },
-    countpic:{
+    countpic: {
       type: String,
-      value: ''
+      value: "",
     },
     shape: {
       type: String,
-      value: 'square'
+      value: "square",
     },
     showPlay: {
       type: Boolean,
-      value: false
-    }
+      value: false,
+    },
   },
 
   /**
@@ -47,11 +47,11 @@ Component({
     mainColor: app.globalData.mainColor,
     src: [],
     flag: 0,
-    width: '',
-    height: '',
+    width: "",
+    height: "",
     // showPlay: false,
-    datasourceCount: '',
-    playpic: '/images/playing.png'
+    datasourceCount: "",
+    playpic: "/images/playing.png",
   },
 
   /**
@@ -59,83 +59,86 @@ Component({
    */
   methods: {
     likeOne(e) {
-      let flag = !this.data.flag
-      let num = Number(flag)
+      let flag = !this.data.flag;
+      let num = Number(flag);
       this.setData({
         src: this.data.likePic[num],
-        flag: flag
-      })
-      let typeid = e.currentTarget.dataset.typeid
-      let contentType = e.currentTarget.dataset.contenttype
-      this.triggerEvent('clickHadle', { typeid: typeid, contentType: contentType, flag: flag});
+        flag: flag,
+      });
+      let typeid = e.currentTarget.dataset.typeid;
+      let contentType = e.currentTarget.dataset.contenttype;
+      this.triggerEvent("clickHadle", {
+        typeid: typeid,
+        contentType: contentType,
+        flag: flag,
+      });
     },
     //加载图片失败
     loadImgError: function (res) {
       this.setData({
-        'item.coverUrl': app.sysInfo.defaultImg
-      })
+        "item.coverUrl": app.sysInfo.defaultImg,
+      });
     },
-    showPlay () {
+    showPlay() {
       this.setData({
-        showPlay: true
-      })
+        showPlay: true,
+      });
     },
-    clearPlay () {
-      console.log('falsefalsefalse')
+    clearPlay() {
       // 清空上一首播放态
-      let playingId = wx.getStorageSync('abumInfoId')
-      this.story = this.selectComponent(`#story${playingId}`)
+      let playingId = wx.getStorageSync("abumInfoId");
+      this.story = this.selectComponent(`#story${playingId}`);
       if (this.story) {
         this.setData({
-          showPlay: false
-        })
+          showPlay: false,
+        });
       }
     },
-    formW (num) {
-      let b = num.toString().split('').reverse()
-      let res = b.slice(4, b.length).reverse().join('')+'万'
-      return res
+    formW(num) {
+      let b = num.toString().split("").reverse();
+      let res = b.slice(4, b.length).reverse().join("") + "万";
+      return res;
     },
-    aa() {
-
-    }
+    aa() {},
   },
-  
+
   attached: function () {
-    if(this.data.likePic && this.data.likePic.length > 1) {
+    if (this.data.likePic && this.data.likePic.length > 1) {
       this.setData({
-        src: this.data.likePic[this.data.flag]
-      })
+        src: this.data.likePic[this.data.flag],
+      });
     }
 
-    let that = this
+    let that = this;
     this.setData({
-      datasourceCount: (that.data.datasource.count > 10000) ? that.formW(that.data.datasource.count) : that.data.datasource.count
-    })
+      datasourceCount:
+        that.data.datasource.count > 10000
+          ? that.formW(that.data.datasource.count)
+          : that.data.datasource.count,
+    });
 
     // 封面形状
     switch (this.data.shape) {
-      case 'square':
-        
+      case "square":
         this.setData({
           width: 41.8,
-          height: 41.8 
-        })
+          height: 41.8,
+        });
         break;
-      case 'rect':
+      case "rect":
         this.setData({
           width: 36.77,
-          height: 43.55
-        })
+          height: 43.55,
+        });
         break;
-      case 'rectBig':
+      case "rectBig":
         this.setData({
           width: 41.2,
-          height: 53.46
-        })
+          height: 53.46,
+        });
         break;
       default:
         break;
     }
-  }
-})
+  },
+});

@@ -27,155 +27,157 @@
  *     item.isVip = true                                         // 是否是会员
  *   })
  * 这里做了下数据字段的转换
- * 
+ *
  * 4、配置页面的快捷入口
  * lalyLtn：[
  *     {icon: '/images/zjst.png', title: "最近收听", name: 'latelyListen', islogin:false},
  *   ]
  *  可选内容，当show为false时不显示分类列表,数量 1~2个
  */
-const app = getApp()
+const app = getApp();
 
 module.exports = {
   data: {
     // 开发者注入快捷入口数据
     lalyLtn: {
       show: true,
-      data: [{
-        icon: '/images/zjst.png',
-        title: "最近收听",
-        name: 'latelyListen',
-        islogin: false
-      },
-      {
-        icon: '/images/icon_collect.png',
-        title: "我喜欢的",
-        name: 'like',
-        islogin: true
-      }],
+      data: [
+        {
+          icon: "/images/zjst.png",
+          title: "最近收听",
+          name: "latelyListen",
+          islogin: false,
+        },
+        {
+          icon: "/images/icon_collect.png",
+          title: "我喜欢的",
+          name: "like",
+          islogin: true,
+        },
+      ],
     },
     // 开发者注入模板页面数据
     info: [],
     // 开发者注入模板标签数据
     labels: {
       show: true,
-      data: [{
-        "name": "推荐",
-        "id": 1
-      }, {
-        "name": "精品",
-        "id": 2
-      }, {
-        "name": "潮流",
-        "id": 3
-      }]
+      data: [
+        {
+          name: "推荐",
+          id: 1,
+        },
+        {
+          name: "精品",
+          id: 2,
+        },
+        {
+          name: "潮流",
+          id: 3,
+        },
+      ],
     },
 
-    countPic: '/images/media_num.png',
+    countPic: "/images/media_num.png",
     // 频道列表，内容列表数据标志变量
     reqS: true,
     reqL: false,
     // 封面图片形状 rect矩形,rectBig大矩形，square，正方形
-    shape: 'square'
+    shape: "square",
   },
   // 页面后台数据(不参与渲染)
   pageData: {
-    pageName: 'index',
-    pageType: 'tab',
+    pageName: "index",
+    pageType: "tab",
     pageLoaded: false,
     // 各频道列表页码，根据groupId获取
     pageNum: 1,
     hasNext: true,
   },
-  onShow() {
-
-  },
+  onShow() {},
   onLoad(options) {
     // 初始化加载数据
-    this._getList('推荐')
+    this._getList("推荐");
   },
-  onReady() {
-
-  },
+  onReady() {},
   selectTap(e) {
-    const index = e.currentTarget.dataset.index
-    const name = e.currentTarget.dataset.name
+    const index = e.currentTarget.dataset.index;
+    const name = e.currentTarget.dataset.name;
     this.setData({
-      currentTap: index
-    })
+      currentTap: index,
+    });
     wx.showLoading({
-      title: '加载中',
-    })
+      title: "加载中",
+    });
     // 这里可以自定义传值传到_getList中
-    this._getList(name)
+    this._getList(name);
   },
   _getList(name) {
     setTimeout(() => {
-      wx.hideLoading()
-      let data = [{
-        id: 958,
-        title: "内容标题1",
-        src: "https://cdn.kaishuhezi.com/kstory/ablum/image/389e9f12-0c12-4df3-a06e-62a83fd923ab_info_w=450&h=450.jpg",
-        contentType: "album",
-        count: 17,
-        isVip: true
-      },
-      {
-        id: 959,
-        title: "内容标题2",
-        src: "https://cdn.kaishuhezi.com/kstory/ablum/image/f20dda35-d945-4ce0-99fb-e59db62ac7c9_info_w=450&h=450.jpg",
-        contentType: "album",
-        count: 13,
-        isVip: true
-      },
-      {
-        id: 960,
-        title: "内容标题3",
-        src:  "https://cdn.kaishuhezi.com/kstory/ablum/image/7b0fe07a-e036-4d93-a8ab-bf6ad2b5a390_info_w=450&h=450.jpg",
-        contentType: "album",
-        count: 10,
-        isVip: true
-      },
-      {
-        id: 961,
-        title: "内容标题4",
-        src: "https://cdn.kaishuhezi.com/kstory/ablum/image/0816edeb-f8b0-4894-91ad-ab64e1b72549_info_w=450&h=450.jpg",
-        contentType: "album",
-        count: 19,
-        isVip: false
-
-      }
-    ]
-      let info = data.map(item => {
-        item.title = `${name}-${item.title}`
-        return item
-      })
+      wx.hideLoading();
+      let data = [
+        {
+          id: 958,
+          title: "内容标题1",
+          src: "https://cdn.kaishuhezi.com/kstory/ablum/image/389e9f12-0c12-4df3-a06e-62a83fd923ab_info_w=450&h=450.jpg",
+          contentType: "album",
+          count: 17,
+          isVip: true,
+        },
+        {
+          id: 959,
+          title: "内容标题2",
+          src: "https://cdn.kaishuhezi.com/kstory/ablum/image/f20dda35-d945-4ce0-99fb-e59db62ac7c9_info_w=450&h=450.jpg",
+          contentType: "album",
+          count: 13,
+          isVip: true,
+        },
+        {
+          id: 960,
+          title: "内容标题3",
+          src: "https://cdn.kaishuhezi.com/kstory/ablum/image/7b0fe07a-e036-4d93-a8ab-bf6ad2b5a390_info_w=450&h=450.jpg",
+          contentType: "album",
+          count: 10,
+          isVip: true,
+        },
+        {
+          id: 961,
+          title: "内容标题4",
+          src: "https://cdn.kaishuhezi.com/kstory/ablum/image/0816edeb-f8b0-4894-91ad-ab64e1b72549_info_w=450&h=450.jpg",
+          contentType: "album",
+          count: 19,
+          isVip: false,
+        },
+      ];
+      let info = data.map((item) => {
+        item.title = `${name}-${item.title}`;
+        return item;
+      });
       this.setData({
         reqL: true,
-        info: info
-      })
-    }, 500)
+        info: info,
+      });
+    }, 500);
   },
   // 跳转到快捷入口页面
   tolatelyListen(e) {
-    let page = e.currentTarget.dataset.page
+    let page = e.currentTarget.dataset.page;
     wx.navigateTo({
-      url: `../${page}/${page}`
-    })
+      url: `../${page}/${page}`,
+    });
   },
   // 跳转到播放详情界面
   linkAbumInfo(e) {
-    let id = e.currentTarget.dataset.id
-    const src = e.currentTarget.dataset.src
-    const title = e.currentTarget.dataset.title
-    wx.setStorageSync('img', src)
+    let id = e.currentTarget.dataset.id;
+    const src = e.currentTarget.dataset.src;
+    const title = e.currentTarget.dataset.title;
+    wx.setStorageSync("img", src);
 
     if (!app.globalData.latelyListenId.includes(id)) {
-      app.globalData.latelyListenId.push(id)
+      app.globalData.latelyListenId.push(id);
     }
-    let url = `../abumInfo/abumInfo?id=${id}&title=${title}`
+    let url = `../abumInfo/abumInfo?id=${id}&title=${title}`;
     wx.navigateTo({
-      url: url
-    })
-  }
-}
+      url: url,
+    });
+  },
+};

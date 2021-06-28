@@ -1,8 +1,8 @@
 import { request, apiFormat } from './https'
 // API域名
 const domain = {
-  'test':'https://tapi.kaishustory.com', // 测试环境
-  'gamma':'https://gapi.kaishustory.com', // 测试环境
+  'test': 'https://tapi.kaishustory.com', // 测试环境
+  'gamma': 'https://gapi.kaishustory.com', // 测试环境
   'prod': 'https://api.kaishustory.com' // 生产环境
 }
 const appId = {

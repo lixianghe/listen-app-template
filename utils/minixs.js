@@ -16,7 +16,6 @@ Page = (options) => {
 // 定义小程序内置的属性/方法
 const originProperties = ['data', 'properties', 'options']
 const originMethods = ['onLoad', 'onReady', 'onShow', 'onHide', 'onUnload', 'onPullDownRefresh', 'onReachBottom', 'onShareAppMessage', 'onPageScroll', 'onTabItemTap']
-
 function merge (mixins, options) {
   mixins.forEach((mixin) => {
     if (Object.prototype.toString.call(mixin) !== '[object Object]') {

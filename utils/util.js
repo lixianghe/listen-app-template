@@ -37,13 +37,11 @@ function playAlrc(that, app) {
 
 function toggleplay(that, app) {
   if (that.data.playing) {
-    console.log("暂停播放")
     that.setData({ 
       playing: false 
     })
     app.stopmusic();
   } else {
-    console.log("继续播放")
     that.setData({
       playing: true
     })
@@ -72,7 +70,6 @@ function initAudioManager(that, songInfo) {
 function EventListener(that){
   //播放事件
   that.audioManager.onPlay(() => {
-    console.log('--------------onPlay----------------')
     wx.hideLoading()
     that.setData({ playing: true });
     wx.setStorageSync('playing', true)
@@ -86,7 +83,6 @@ function EventListener(that){
   })
   //暂停事件
   that.audioManager.onPause(() => {
-    console.log('触发播放暂停事件');
     that.setData({ playing: false });
     wx.setStorageSync('playing', false)
     // 控制专辑详情的播放gif
@@ -97,17 +93,14 @@ function EventListener(that){
   })
   //上一首事件
   that.audioManager.onPrev(() => {
-    console.log('触发上一首事件');
     that.pre()
   })
   //下一首事件
   that.audioManager.onNext(() => {
-    console.log('触发onNext事件');
     that.next();
   })
   //停止事件
   that.audioManager.onStop(() => {
-    console.log('触发停止事件');
     that.setData({ playing: false });
     wx.setStorageSync('playing', false)
     // 控制专辑详情的播放gif
@@ -118,7 +111,6 @@ function EventListener(that){
   })
   //播放错误事件
   that.audioManager.onError(() => {
-    console.log('触发播放错误事件');
     that.setData({ playing: false });
     wx.setStorageSync('playing', false)
     // 控制专辑详情的播放gif
@@ -129,7 +121,6 @@ function EventListener(that){
   })
   //播放完成事件
   that.audioManager.onEnded(() => {
-    console.log('触发播放完成事件');
   })
 }
 

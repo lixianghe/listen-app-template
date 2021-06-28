@@ -25,73 +25,72 @@
       item.isVip = true                                         // 是否是会员
     })
  */
-const app = getApp()
+const app = getApp();
 
 module.exports = {
   data: {
     showModal: false,
     reqL: false,
-    countPic: '/images/media_num.png',
+    countPic: "/images/media_num.png",
     // 开发者注入模板标签数据
     labels: {
       show: true,
-      data: [{
-        name: '专辑',
-        value: 'album'
-      },
-      {
-        name: '故事',
-        value: 'media'
-      }]
+      data: [
+        {
+          name: "专辑",
+          value: "album",
+        },
+        {
+          name: "故事",
+          value: "media",
+        },
+      ],
     },
     // 开发者注入模板页面数据
     info: [],
     // 封面图片形状 rect矩形,rectBig大矩形，square，正方形
-    shape: 'square'
+    shape: "square",
   },
-  onShow() {
-
-  },
+  onShow() {},
   onLoad(options) {
-    this._getList('专辑')
+    this._getList("专辑");
   },
-  onReady() {
-
-  },
+  onReady() {},
   // 跳转到播放详情界面
   linkAbumInfo(e) {
-    let id = e.currentTarget.dataset.id
-    const src = e.currentTarget.dataset.src
-    const title = e.currentTarget.dataset.title
-    wx.setStorageSync('img', src)
-    let url = `../abumInfo/abumInfo?id=${id}&title=${title}`
+    let id = e.currentTarget.dataset.id;
+    const src = e.currentTarget.dataset.src;
+    const title = e.currentTarget.dataset.title;
+    wx.setStorageSync("img", src);
+    let url = `../abumInfo/abumInfo?id=${id}&title=${title}`;
     wx.navigateTo({
-      url: url
-    })
+      url: url,
+    });
   },
   selectTap(e) {
-    const index = e.currentTarget.dataset.index
-    const name = e.currentTarget.dataset.name
+    const index = e.currentTarget.dataset.index;
+    const name = e.currentTarget.dataset.name;
     this.setData({
       currentTap: index,
-      retcode: 0
-    })
+      retcode: 0,
+    });
     wx.showLoading({
-      title: '加载中',
-    })
-    this._getList(name)
+      title: "加载中",
+    });
+    this._getList(name);
   },
   _getList(name) {
     setTimeout(() => {
-      let info = []
-      wx.hideLoading()
-      let data = [{
+      let info = [];
+      wx.hideLoading();
+      let data = [
+        {
           id: 958,
           title: "内容标题1",
           src: "https://cdn.kaishuhezi.com/kstory/ablum/image/389e9f12-0c12-4df3-a06e-62a83fd923ab_info_w=450&h=450.jpg",
           contentType: "album",
           count: 17,
-          isVip: true
+          isVip: true,
         },
         {
           id: 959,
@@ -99,7 +98,7 @@ module.exports = {
           src: "https://cdn.kaishuhezi.com/kstory/ablum/image/f20dda35-d945-4ce0-99fb-e59db62ac7c9_info_w=450&h=450.jpg",
           contentType: "album",
           count: 13,
-          isVip: true
+          isVip: true,
         },
         {
           id: 962,
@@ -107,29 +106,27 @@ module.exports = {
           src: "https://cdn.kaishuhezi.com/kstory/story/image/2af5072c-8f22-4b5d-acc2-011084c699f8_info_w=750_h=750_s=670433.jpg",
           contentType: "media",
           count: 0,
-          isVip: false
-        }
-      ]
-      info = data.map(item => {
-        item.title = `${name}-${item.title}`
-        return item
-      })
+          isVip: false,
+        },
+      ];
+      info = data.map((item) => {
+        item.title = `${name}-${item.title}`;
+        return item;
+      });
       this.setData({
         reqL: true,
-        info: info
-      })
+        info: info,
+      });
       if (info.length === 0) {
         this.setData({
-          showModal: true
-        })
+          showModal: true,
+        });
       }
-    }, 500)
-
-    
+    }, 500);
   },
   close() {
     this.setData({
-      showModal: false
-    })
-  }
-}
+      showModal: false,
+    });
+  },
+};

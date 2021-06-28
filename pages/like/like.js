@@ -1,29 +1,29 @@
-import tool from '../../utils/util'
-const app = getApp()
+import tool from "../../utils/util";
+const app = getApp();
 Page({
-  mixins: [require('../../developerHandle/like')],
+  mixins: [require("../../developerHandle/like")],
   data: {
     colorStyle: app.sysInfo.colorStyle,
     backgroundColor: app.sysInfo.backgroundColor,
     screen: app.globalData.screen,
-    noContent: '/images/nullContent.png',
-    info: '',
+    noContent: "/images/nullContent.png",
+    info: "",
     currentTap: 0,
     scrollLeft: 0,
     mainColor: app.globalData.mainColor,
-    reactCode: 0
+    reactCode: 0,
   },
   screen: app.globalData.screen,
- 
+
   onLoad(options) {
     // 检测网络问题
-    tool.getNetWork(this)
+    tool.getNetWork(this);
   },
   onShow() {
-    this.selectComponent('#miniPlayer').setOnShow()
-    tool.showPlayStatus(this)
+    this.selectComponent("#miniPlayer").setOnShow();
+    tool.showPlayStatus(this);
   },
   onHide() {
-    this.selectComponent('#miniPlayer').setOnHide()
-  }
-})
+    this.selectComponent("#miniPlayer").setOnHide();
+  },
+});
