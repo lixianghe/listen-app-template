@@ -52,75 +52,85 @@ function toggleplay(that, app) {
   }
 }
 
-
-// 初始化 BackgroundAudioManager
-function initAudioManager(that, songInfo) {
-  let list = wx.getStorageSync('nativeList')
-  let index = list.findIndex(n => Number(n.id) === Number(songInfo.id))
-  that.audioManager = wx.getBackgroundAudioManager()
-  that.audioManager.playInfo = {
-    playList: list
+// 向统一播放器传值
+function initAudioManager(app, that, songInfo) {
+  const nativeList = wx.getStorageSync('nativeList') || []
+  const playList = nativeList.map(item => {
+    return {
+      title: item.title, //音频标题
+      singer: item.singer, //歌手名
+      coverImgUrl: item.coverImgUrl, //封面图 URL
+      dataUrl: item.src, // 音频的数据源
+      options: JSON.stringify(item) //自定义字段
+    }
+  })
+  console.log(playList);
+  app.audioManager.playInfo = {
+    playList,
+    context: JSON.stringify(songInfo)
   };
-  EventListener(that)
+  EventListener(app, that)
 }
 
-
-
-// 监听播放，上一首，下一首
-function EventListener(that){
+function EventListener(app, that){
   //播放事件
-  that.audioManager.onPlay(() => {
+  app.audioManager.onPlay(() => {
     wx.hideLoading()
-    that.setData({ playing: true });
     wx.setStorageSync('playing', true)
-    // 控制专辑详情的播放gif
+    that.setData({
+      playing: true
+    })
     let pages = getCurrentPages()
-    let abum = pages.filter(n => n.route == 'pages/abumInfo/abumInfo')[0]
-    if (!abum) return
-    let minibar = abum.selectComponent('#miniPlayer')
-    abum.setData({ playing: true })
-    minibar.setData({ playing: true })
+    let cureentPage = pages[pages.length - 1]
+    let minibar = cureentPage.selectComponent('#miniPlayer')
+    if (minibar) minibar.isLiked()
+    that.triggerEvent('setPlaying', true)
   })
   //暂停事件
-  that.audioManager.onPause(() => {
-    that.setData({ playing: false });
+  app.audioManager.onPause(() => {
     wx.setStorageSync('playing', false)
-    // 控制专辑详情的播放gif
-    let pages = getCurrentPages()
-    let abum = pages.filter(n => n.route == 'pages/abumInfo/abumInfo')[0]
-    if (!abum) return
-    abum.setData({ playing: false })
+    that.setData({
+      playing: false
+    })
+    that.triggerEvent('setPlaying', false)
   })
   //上一首事件
-  that.audioManager.onPrev(() => {
-    that.pre()
+  app.audioManager.onPrev(() => {
+    const pages = getCurrentPages()
+    let miniPlayer = pages[pages.length - 1].selectComponent('#miniPlayer')
+    if (miniPlayer) {
+      miniPlayer.pre(true)
+    } else {
+      pages[pages.length - 1].pre(true)
+    }
+
   })
   //下一首事件
-  that.audioManager.onNext(() => {
-    that.next();
+  app.audioManager.onNext(() => {
+    const pages = getCurrentPages()
+    let miniPlayer = pages[pages.length - 1].selectComponent('#miniPlayer')
+    if (miniPlayer) {
+      miniPlayer.next(true)
+    } else {
+      pages[pages.length - 1].next(true)
+    }
   })
   //停止事件
-  that.audioManager.onStop(() => {
-    that.setData({ playing: false });
-    wx.setStorageSync('playing', false)
-    // 控制专辑详情的播放gif
-    let pages = getCurrentPages()
-    let abum = pages.filter(n => n.route == 'pages/abumInfo/abumInfo')[0]
-    if (!abum) return
-    abum.setData({ playing: false })
+  app.audioManager.onStop(() => {
+   let time = app.audioManager.currentTime / app.audioManager.duration * 100;
+    that.setData({
+      percent: time
+    })
+    app.globalData.percent = time
+    wx.hideLoading()
   })
   //播放错误事件
-  that.audioManager.onError(() => {
-    that.setData({ playing: false });
-    wx.setStorageSync('playing', false)
-    // 控制专辑详情的播放gif
-    let pages = getCurrentPages()
-    let abum = pages.filter(n => n.route == 'pages/abumInfo/abumInfo')[0]
-    if (!abum) return
-    abum.setData({ playing: false })
+  app.audioManager.onError(() => {
+    console.log('触发播放错误事件');
   })
   //播放完成事件
-  that.audioManager.onEnded(() => {
+  app.audioManager.onEnded(() => {
+    console.log('触发播放完成事件');
   })
 }
 

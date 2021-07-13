@@ -115,7 +115,7 @@ App({
     const songInfo = wx.getStorageSync('songInfo')
     if (!songInfo || !songInfo.src) return
     this.carHandle(songInfo, seek)
-    tool.initAudioManager(that, songInfo)
+    tool.initAudioManager(this,that, songInfo)
   },
   // 车载情况下的播放
   carHandle(songInfo, seek) {

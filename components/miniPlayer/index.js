@@ -150,8 +150,14 @@ Component({
         playing: playing,
         percent: app.globalData.percent || 0,
       });
-      // if (playing) app.playing(null, that)
     },
+    // 是否被收藏
+    isLiked() {
+      let songInfo = wx.getStorageSync('songInfo')
+      if (app.userInfo && app.userInfo.token) {
+        isFavorite({mediaId: songInfo.id}, this)
+      }
+   },
     setOnHide() {},
   },
 });
