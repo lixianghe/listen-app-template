@@ -1,12 +1,11 @@
 const base = "https://api.kaishustory.com";
-// const base = 'https://tapi.kaishustory.com'
 const appId = 786474;
 /**
  * 封封微信的的request
  */
 
 export function request(url, data = {}, method = "GET") {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     wx.request({
       url: base + url,
       data: data,
@@ -21,7 +20,7 @@ export function request(url, data = {}, method = "GET") {
         deviceId: wx.getStorageSync("deviceId") || "",
         token: wx.getStorageSync("token") || "",
       },
-      success: function (res) {
+      success: (res) => {
         if (res.statusCode === 200) {
           if (res.data.code === 0) {
             resolve(res.data.data);
@@ -43,7 +42,7 @@ export function request(url, data = {}, method = "GET") {
           reject(res.data.message);
         }
       },
-      fail: function (err) {
+      fail: (err) => {
         reject(err);
       },
     });

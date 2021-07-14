@@ -64,7 +64,6 @@ function initAudioManager(app, that, songInfo) {
       options: JSON.stringify(item) //自定义字段
     }
   })
-  console.log(playList);
   app.audioManager.playInfo = {
     playList,
     context: JSON.stringify(songInfo)
@@ -126,11 +125,9 @@ function EventListener(app, that){
   })
   //播放错误事件
   app.audioManager.onError(() => {
-    console.log('触发播放错误事件');
   })
   //播放完成事件
   app.audioManager.onEnded(() => {
-    console.log('触发播放完成事件');
   })
 }
 
@@ -211,15 +208,15 @@ function getNetWork(that) {
 
 
 module.exports = {
-  formatToSend: formatToSend,
-  formatduration: formatduration,
-  playAlrc: playAlrc,
-  toggleplay: toggleplay,
-  initAudioManager: initAudioManager,
-  EventListener: EventListener,
-  throttle: throttle,
-  debounce: debounce,
-  panelSetInfo: panelSetInfo,
-  getNetWork: getNetWork,
-  showPlayStatus: showPlayStatus
+  formatToSend,
+  formatduration,
+  playAlrc,
+  toggleplay,
+  initAudioManager,
+  EventListener,
+  throttle,
+  debounce,
+  panelSetInfo,
+  getNetWork,
+  showPlayStatus
 }

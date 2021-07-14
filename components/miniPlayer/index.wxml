@@ -20,3 +20,5 @@
   </view>
   <view data-disablefocus="true" catchtap="playInfo" style="flex: 1;height: 100%"></view>
 </view>
+<!-- 打印日志 -->
+<log id="mylog"></log>

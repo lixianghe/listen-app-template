@@ -6,7 +6,6 @@ Component({
    * 组件的属性列表
    */
   properties: {},
-
   /**
    * 组件的初始数据
    */
@@ -16,15 +15,16 @@ Component({
     logTop: "100vh",
     logWidth: "100vh",
     timer: [],
+    openLog: app.openLog,
   },
-
+  created() {
+    app.log("v" + app.version);
+  },
   /**
    * 组件的方法列表
    */
   methods: {
     refreshLog() {
-      //注释掉return,可以看log
-      // return
       this.setData({
         log: app.logText,
       });
@@ -78,8 +78,11 @@ Component({
         timer,
       });
     },
+    logHandle() {
+      // this.tapLog();
+      this.openLog();
+    },
   },
-
   // 以下是旧式的定义方式，可以保持对 <2.2.3 版本基础库的兼容
   attached: function () {},
 });
