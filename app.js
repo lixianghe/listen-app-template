@@ -2,6 +2,7 @@ import tool from "./utils/util";
 import btnConfig from "./utils/pageOtpions/pageOtpions";
 import { getMedia } from "./developerHandle/playInfo";
 require("./utils/minixs");
+require("./utils/mock/index");
 
 App({
   globalData: {
