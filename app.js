@@ -88,7 +88,7 @@ App({
     });
     // 控制专辑详情的播放gif
     let pages = getCurrentPages();
-    let abum = pages.filter((n) => n.route == "pages/abumInfo/abumInfo")[0];
+    let abum = pages.filter((n) => n.route == "pages/albumInfo/albumInfo")[0];
     if (abum) abum.setData({ currentId: Number(song.id) });
     // 获取歌曲的url
     let params = {

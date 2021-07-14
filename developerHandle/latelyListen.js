@@ -62,7 +62,7 @@ module.exports = {
     const src = e.currentTarget.dataset.src;
     const title = e.currentTarget.dataset.title;
     wx.setStorageSync("img", src);
-    let url = `../abumInfo/abumInfo?id=${id}&title=${title}`;
+    let url = `../albumInfo/albumInfo?id=${id}&title=${title}`;
     wx.navigateTo({
       url: url,
     });

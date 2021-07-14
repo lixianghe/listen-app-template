@@ -175,7 +175,7 @@ module.exports = {
     if (!app.globalData.latelyListenId.includes(id)) {
       app.globalData.latelyListenId.push(id);
     }
-    let url = `../abumInfo/abumInfo?id=${id}&title=${title}`;
+    let url = `../albumInfo/albumInfo?id=${id}&title=${title}`;
     wx.navigateTo({
       url: url,
     });

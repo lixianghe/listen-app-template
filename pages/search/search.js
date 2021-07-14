@@ -57,7 +57,7 @@ Page({
 
     let url;
     if (routeType === "album") {
-      url = `../abumInfo/abumInfo?id=${id}&title=${title}&routeType=${routeType}`;
+      url = `../albumInfo/albumInfo?id=${id}&title=${title}&routeType=${routeType}`;
       wx.navigateTo({
         url: url,
       });
